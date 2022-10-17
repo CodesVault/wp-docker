@@ -1,0 +1,41 @@
+#!/bin/bash
+
+source $(dirname "$0")/cli/get_inputs
+source $(dirname "$0")/cli/generate_files
+
+DOMAIN=$1
+
+function add_host() {
+	Domain=$DOMAIN.test
+    HOSTS_LINE="#WPDocker\n127.0.0.1\t$Domain"
+
+	Host_path="/etc/hosts"
+
+    if [ -n "$(grep $Domain $Host_path)" ]
+        then
+            printf "$Domain already exists : \n$(grep $Domain $Host_path)\n"
+			read -p "Want to reuse? (y/N): " -e -i 'y' ReuseDomain
+			if [ $ReuseDomain == "N" ]; then
+				echo 
+				get_inputs
+			else
+				generate_files $DOMAIN $PHP_VERSION $NODEJS_VERSION
+			fi
+        else
+            echo "Adding $Domain to your $Host_path"
+            sudo -- sh -c -e "echo '$HOSTS_LINE' >> $Host_path"
+
+            if [ -n "$(grep $Domain $Host_path)" ]
+                then
+                    printf "$Domain added succesfully \n$(grep $Domain $Host_path)\n"
+					generate_files $DOMAIN $PHP_VERSION $NODEJS_VERSION
+                else
+                    echo "Failed to Add $Domain, Try again!"
+					exit
+            fi
+    fi
+}
+
+function update_hosts {
+	add_host
+}

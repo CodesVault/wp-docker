@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function get_inputs {
+	read -p "Domain prefix: " DOMAIN
+	if [ ! $DOMAIN ]; then
+		printf "*** Domain prefix is required. \nExit\n"
+		exit
+	fi
+
+	read -p "PHP version: " -e -i '7.4' PHP_VERSION
+	read -p "NodeJS version: " -e -i '16.x' NODEJS_VERSION
+}

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+source $(dirname "$0")/cli/routes
+source $(dirname "$0")/cli/get_inputs
+source $(dirname "$0")/cli/update_hosts
+source $(dirname "$0")/cli/generate_files
+source $(dirname "$0")/cli/docker_environment
+source $(dirname "$0")/cli/prepare_wp
+source $(dirname "$0")/cli/congrats
+
+function bingo {
+	if [[ $1 == "--routes" ]];
+	then
+		routes
+		exit
+	fi
+
+	get_inputs
+	update_hosts $DOMAIN
+
+	docker_environment $DOMAIN
+	prepare_wp
+
+	congrats $DOMAIN $PORT
+}

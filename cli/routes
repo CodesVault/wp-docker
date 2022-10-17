@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function routes {
+	if [ ! -e ".env" ]
+	then
+		printf ".env file not exists here\n`pwd`\n"
+		exit
+	fi
+
+	i=0
+	while IFS="=" read -r key value; 
+	do
+		if [ $i == 1 ]; then
+			Domain=$value
+		fi
+		if [ $i == 2 ]; then
+			Http_Port=$value
+		fi
+		if [ $i == 4 ]; then
+			MyAdmin_Port=$value
+		fi
+		(( i++ ))
+	done <.env
+
+	printf "Domain: %s%s \n" "http://$Domain:" $Http_Port
+	printf "PHPMyAdmin: %s%s \n" "http://$Domain:" $MyAdmin_Port
+}

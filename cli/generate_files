@@ -1,0 +1,46 @@
+#!/bin/bash
+
+source $(dirname "$0")/cli/random_port
+
+DOMAIN=$1
+PHP_VERSION=$2
+NODEJS_VERSION=$3
+
+Dir=$(cd `dirname $0` && pwd)
+
+function generate_env {
+	Docker_Dir=$(cd "$Dir/master_docker" && pwd)
+
+	PORT=`random_port 3000`
+	mysql_port=`random_port 4000`
+	phpmyadmin_port=`random_port 5000`
+
+   cat > $Docker_Dir/.env << EOF
+APP=$DOMAIN
+DOMAIN=$DOMAIN.test
+HTTP_PORT=$PORT
+MYSQL_PORT=$mysql_port
+PHPMYADMIN_PORT=$phpmyadmin_port
+
+PHP_VERSION=$PHP_VERSION
+NODEJS_VERSION=$NODEJS_VERSION
+
+MYSQL_DATABASE=wp
+MYSQL_USER=wp
+MYSQL_PASSWORD=secret
+MYSQL_ROOT_PASSWORD=secret
+EOF
+
+	User=`whoami`
+	sudo chown $User:$User $Docker_Dir/.env
+}
+
+function generate_files {
+	echo 
+	printf "Generating env\n"
+	generate_env
+
+	printf "Generating Docker files\n"
+	Current_Dir=`pwd`/$DOMAIN
+	cp -r $Docker_Dir $Current_Dir
+}

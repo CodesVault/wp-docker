@@ -1,0 +1,46 @@
+#!/bin/bash
+
+check_os() {
+	OS="`uname`"
+	Extension='.zip'
+
+	if [ $OS == "Darwin" ]; then
+		Extension=".tar.gz"
+	fi
+}
+
+function prepare_wp {
+	sudo chown -R $User:www-data wordpress
+	sudo chmod -R 777 wordpress
+
+	echo 
+	read -p "Want to download WordPress also? (y/N): " -e -i 'y' Download_WP
+	if [ $Download_WP == "N" ]; then
+		exit
+	fi
+
+	check_os
+
+	read -p "WordPress Version: " -e -i 'latest' WP_Version
+	Version=$WP_Version
+	if [ $WP_Version != "latest" ]; then
+		WP_Version="wordpress-$WP_Version"
+	fi
+
+	echo 
+	echo "Downloading WordPress $Version ..."
+	curl -sS -o wp$Extension https://wordpress.org/$WP_Version$Extension
+
+	echo "Changing folder mod, may require sudo password.."
+	sudo chown $User:www-data wp$Extension
+	sudo chmod 777 wp$Extension
+
+	echo "Unzipping..."
+	unzip -q wp$Extension
+	echo 
+	sudo chown -R $User:www-data wordpress
+	sudo chmod -R 777 wordpress
+
+	rm -rf wp$Extension
+	echo "Done."
+}

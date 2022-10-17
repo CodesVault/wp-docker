@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DOMAIN=$1
+PORT=$2
+
+function congrats {
+	i=0
+	while IFS= read -r line; 
+	do
+		if [ $i == 3 ]; then
+			Port=$line
+		fi
+		(( i++ ))
+	done <.env
+
+	printf '%s%s\n' "http://localhost:" "$PORT";
+	printf '%s%s\n' "http://$DOMAIN.test:" "$PORT";
+	echo 
+	echo "Awesome! Smashed it..."
+}
