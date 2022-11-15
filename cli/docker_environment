@@ -10,10 +10,15 @@ function docker_environment {
 
 	mkdir -m 777 db
 	echo "Changing folder mod, may require sudo password.."
-	sudo chown -R $User:www-data db
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown -R $User:$User db
+		exit
+	fi
 
 	docker-compose up -d --build
 
-	sudo chown -R $User:www-data db
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown -R $User:$User db
+	fi
 	sudo chmod -R 777 db
 }

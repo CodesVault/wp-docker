@@ -6,7 +6,7 @@ FROM nginx:stable-alpine
 RUN mkdir -p /var/www/html
 
 RUN addgroup docker && adduser --disabled-password --ingroup docker --no-create-home docker
-RUN chmod o+r /etc/resolv.conf
+# RUN chmod o+r /etc/resolv.conf
 
 RUN chown docker:docker /var/www/html
 RUN chmod 777 /var/www/html

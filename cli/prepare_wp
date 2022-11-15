@@ -10,35 +10,50 @@ check_os() {
 }
 
 function prepare_wp {
-	sudo chown -R $User:www-data wordpress
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown -R $User:$User wordpress
+	fi
 	sudo chmod -R 777 wordpress
 
 	echo 
-	read -p "Want to download WordPress also? (y/N): " -e -i 'y' Download_WP
+	read -p "Want to download WordPress also? (y/N): " Download_WP
 	if [ $Download_WP == "N" ]; then
 		exit
 	fi
 
 	check_os
 
-	read -p "WordPress Version: " -e -i 'latest' WP_Version
-	Version=$WP_Version
-	if [ $WP_Version != "latest" ]; then
-		WP_Version="wordpress-$WP_Version"
+	wp_version=latest
+	read -p "WordPress Version: [Default: latest] " WP_Version
+	if [ $WP_Version ]; then
+		wp_version=$WP_Version
+	fi
+	if [ $wp_version != "latest" ]; then
+		wp_version="wordpress-$WP_Version"
 	fi
 
 	echo 
-	echo "Downloading WordPress $Version ..."
-	curl -sS -o wp$Extension https://wordpress.org/$WP_Version$Extension
+	echo "Downloading WordPress $wp_version ..."
+	curl -sS -o wp$Extension https://wordpress.org/$wp_version$Extension
 
 	echo "Changing folder mod, may require sudo password.."
-	sudo chown $User:www-data wp$Extension
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown $User:$User wp$Extension
+	fi
 	sudo chmod 777 wp$Extension
 
 	echo "Unzipping..."
-	unzip -q wp$Extension
+	if [ `uname` != 'Darwin' ]; then
+		unzip -q wp$Extension
+	fi
+	if [ `uname` == 'Darwin' ]; then
+		tar -xf wp$Extension
+	fi
+
 	echo 
-	sudo chown -R $User:www-data wordpress
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown -R $User:$User wordpress
+	fi
 	sudo chmod -R 777 wordpress
 
 	rm -rf wp$Extension
