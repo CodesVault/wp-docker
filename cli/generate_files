@@ -31,8 +31,10 @@ MYSQL_PASSWORD=secret
 MYSQL_ROOT_PASSWORD=secret
 EOF
 
-	User=`whoami`
-	sudo chown $User:$User $Docker_Dir/.env
+	if [ `uname` != 'Darwin' ]; then
+		User=`whoami`
+		sudo chown $User:$User $Docker_Dir/.env
+	fi
 }
 
 function generate_files {
@@ -42,5 +44,5 @@ function generate_files {
 
 	printf "Generating Docker files\n"
 	Current_Dir=`pwd`/$DOMAIN
-	cp -r $Docker_Dir $Current_Dir
+	cp -R $Docker_Dir/ "$Current_Dir"
 }

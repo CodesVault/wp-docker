@@ -3,7 +3,8 @@
 DOMAIN=$1
 
 function docker_environment {
-	cd `pwd`/$DOMAIN
+	path=`pwd`/$DOMAIN
+	cd "$path"
 	echo 
 	echo "Starting Docker setup..."
 	echo 
