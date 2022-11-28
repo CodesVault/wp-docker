@@ -13,7 +13,6 @@ function docker_environment {
 	echo "Changing folder mod, may require sudo password.."
 	if [ `uname` != 'Darwin' ]; then
 		sudo chown -R $User:$User db
-		exit
 	fi
 
 	docker-compose up -d --build

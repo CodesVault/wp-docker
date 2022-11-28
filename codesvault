@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Developed by CodesVault <https://github.com/CodesVault>
+# Author: Keramot UL Islam <https://abmsourav.com>
+
 source $(dirname "$0")/cli/bingo
 
 bingo $1
