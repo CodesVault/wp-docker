@@ -20,6 +20,7 @@ Each development Environment will run into Docker containers and completely isol
 	<li>Mysql</li>
 	<li>Composer</li>
 	<li>PHPMyAdmin</li>
+	<li>WP CLI</li>
 </p>
 
 <br>
