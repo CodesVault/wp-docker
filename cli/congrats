@@ -15,6 +15,10 @@ function congrats {
 
 	printf '%s%s\n' "http://localhost:" "$PORT";
 	printf '%s%s\n' "http://$DOMAIN.test:" "$PORT";
+	echo "Awesome! you did it..."
 	echo 
-	echo "Awesome! Smashed it..."
+	echo 
+	printf '%s %s\n' "Author:" "Keramot UL Islam <https://abmsourav.com>";
+	printf '%s %s' "Developed by CodesVault" "<https://github.com/CodesVault>";
+	echo 
 }

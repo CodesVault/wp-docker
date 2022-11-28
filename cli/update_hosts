@@ -14,7 +14,7 @@ function add_host() {
     if [ -n "$(grep $Domain $Host_path)" ]
         then
             printf "$Domain already exists : \n$(grep $Domain $Host_path)\n"
-			read -p "Want to reuse? (y/N): " -e -i 'y' ReuseDomain
+			read -p "Want to reuse? (y/N): " ReuseDomain
 			if [ $ReuseDomain == "N" ]; then
 				echo 
 				get_inputs
@@ -28,6 +28,7 @@ function add_host() {
             if [ -n "$(grep $Domain $Host_path)" ]
                 then
                     printf "$Domain added succesfully \n$(grep $Domain $Host_path)\n"
+                    echo $PHP_VERSION
 					generate_files $DOMAIN $PHP_VERSION $NODEJS_VERSION
                 else
                     echo "Failed to Add $Domain, Try again!"

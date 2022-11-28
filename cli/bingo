@@ -14,6 +14,7 @@ function bingo {
 		routes
 		exit
 	fi
+	User=`whoami`
 
 	get_inputs
 	update_hosts $DOMAIN

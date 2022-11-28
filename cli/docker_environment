@@ -3,17 +3,22 @@
 DOMAIN=$1
 
 function docker_environment {
-	cd `pwd`/$DOMAIN
+	path=`pwd`/$DOMAIN
+	cd "$path"
 	echo 
 	echo "Starting Docker setup..."
 	echo 
 
 	mkdir -m 777 db
 	echo "Changing folder mod, may require sudo password.."
-	sudo chown -R $User:www-data db
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown -R $User:$User db
+	fi
 
 	docker-compose up -d --build
 
-	sudo chown -R $User:www-data db
+	if [ `uname` != 'Darwin' ]; then
+		sudo chown -R $User:$User db
+	fi
 	sudo chmod -R 777 db
 }
