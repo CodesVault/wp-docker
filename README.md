@@ -61,4 +61,4 @@ Incase if you forgate your domain or PHPMyAdmin url then just run `codesvault --
 
 | Name| Github username |
 | ----------- | ----------- |
-| AbmSourav      | @AbmSourav   |
+| AbmSourav      | [@AbmSourav](https://github.com/AbmSourav)   |
