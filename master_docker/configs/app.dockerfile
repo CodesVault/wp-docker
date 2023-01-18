@@ -8,7 +8,7 @@ RUN touch /var/log/error_log
 
 # ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
-RUN addgroup docker && useradd -g docker -M docker
+RUN addgroup docker && useradd -rm -d /home/docker -s /bin/bash -g root -G sudo -u 1001 docker
 RUN mkdir -p /var/www/html
 RUN chown docker:docker /var/www/html
 RUN chmod 777 /var/www/html
@@ -21,7 +21,7 @@ RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
 # RUN chmod o+r /etc/resolv.conf
 
-RUN apt-get update && apt-get install -y git apt-utils zip
+RUN apt-get update && apt-get install -y git apt-utils zip unzip
 
 RUN apt-get update \
     && apt-get autoremove -y \
@@ -33,3 +33,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION} | bash - 
 RUN apt-get update && apt-get install -y nodejs
+
+USER docker
