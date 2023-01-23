@@ -46,6 +46,8 @@ services:
     volumes:
       - ./configs/php.ini:/usr/local/etc/php/php.ini
       - ./wordpress:/var/www/html:delegated
+    extra_hosts:
+      - host.docker.internal:host-gateway
     env_file:
       - .env
 

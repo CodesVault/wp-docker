@@ -16,6 +16,9 @@ WORKDIR /var/www/html
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
 
+RUN pecl install -o -f xdebug-3.0.1 \
+    && docker-php-ext-enable xdebug
+
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
