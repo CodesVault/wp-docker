@@ -1,23 +1,26 @@
 #!/bin/bash
 
+source $(dirname "$0")/cli/ui
+
 DOMAIN=$1
 
 function docker_environment {
 	path=`pwd`/$DOMAIN
 	cd "$path"
 	echo 
-	echo "Starting Docker setup..."
+	printLn "Starting Docker setup..."
 	echo 
 
 	mkdir -m 777 db
-	echo "Changing folder mod, may require sudo password.."
 	if [ `uname` != 'Darwin' ]; then
+		printf "\n${GRAY}Changing /db folder mod, may require sudo password..${NC}\n"
 		sudo chown -R $User:$User db
 	fi
 
 	docker-compose up -d --build
 
 	if [ `uname` != 'Darwin' ]; then
+		printf "\n${GRAY}Changing /db folder mod, may require sudo password..${NC}\n"
 		sudo chown -R $User:$User db
 	fi
 	sudo chmod -R 777 db

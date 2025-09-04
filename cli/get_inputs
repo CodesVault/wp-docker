@@ -1,20 +1,28 @@
 #!/bin/bash
 
 function get_inputs {
-	read -p "Domain prefix: " DOMAIN
+	# ANSI color codes
+	BLUE='\033[0;34m'
+	GRAY='\033[0;37m'
+	NC='\033[0m' # No Color
+	
+	printf "\n${BLUE}Domain prefix: ${NC}"
+	read DOMAIN
 	if [ ! $DOMAIN ]; then
 		printf "*** Domain prefix is required. \nExit\n"
 		exit
 	fi
 
 	PHP_VERSION=7.4
-	read -p "PHP version: [Default  7.4]  " php_version
+	printf "\n${BLUE}PHP version ${GRAY}[Default 7.4]:${NC}\n "
+	read php_version
 	if [ $php_version ]; then
 		PHP_VERSION=$php_version
 	fi
 
 	NODEJS_VERSION=16.x
-	read -p "NodeJS version: [Default 16.x] " nodejs_version
+	printf "\n${BLUE}NodeJS version ${GRAY}[Default 16.x]:${NC}\n "
+	read nodejs_version
 	if [ $nodejs_version ]; then
 		NODEJS_VERSION=$nodejs_version
 	fi

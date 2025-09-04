@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source $(dirname "$0")/cli/ui
 source $(dirname "$0")/cli/random_port
 
 DOMAIN=$1
@@ -39,10 +40,10 @@ EOF
 
 function generate_files {
 	echo 
-	printf "Generating env\n"
+	printLn "Generating env"
 	generate_env
 
-	printf "Generating Docker files\n"
+	printLn "Generating Docker files"
 	Current_Dir=`pwd`/$DOMAIN
 	cp -R $Docker_Dir/ "$Current_Dir"
 }

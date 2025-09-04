@@ -13,12 +13,13 @@ function congrats {
 		(( i++ ))
 	done <.env
 
-	printf '%s%s\n' "http://localhost:" "$PORT";
-	printf '%s%s\n' "http://$DOMAIN.test:" "$PORT";
 	echo "Awesome! you did it..."
-	echo 
-	echo 
-	printf '%s %s\n' "Author:" "Keramot UL Islam <https://abmsourav.com>";
-	printf '%s %s' "Developed by CodesVault" "<https://github.com/CodesVault>";
-	echo 
+	echo
+	printf "${GREEN}%s%s\n" "http://localhost:" "$PORT";
+	printf "%s%s${NC}\n" "http://$DOMAIN.test:" "$PORT";
+	echo
+	printf "Author: ${BLUE}Keramot UL Islam <https://abmsourav.com>${NC}\n";
+	printf "${GRAY}Developed by CodesVault <https://github.com/CodesVault>${NC}";
+	echo
+	echo
 }

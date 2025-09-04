@@ -1,2 +1,11 @@
 master_docker/.env
 .DS_Store
+
+# Build artifacts
+build
+
+test-output/
+
+# Temporary files
+*.x.c
+*.x

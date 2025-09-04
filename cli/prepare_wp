@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $(dirname "$0")/cli/ui
+
 check_os() {
 	OS="`uname`"
 	Extension='.zip'
@@ -16,7 +18,8 @@ function prepare_wp {
 	sudo chmod -R 777 wordpress
 
 	echo 
-	read -p "Want to download WordPress also? (y/N): " Download_WP
+	printf "${BLUE}Want to download WordPress also? ${GRAY}(y/N):${NC} "
+	read Download_WP
 	if [ $Download_WP == "N" ]; then
 		exit
 	fi
@@ -24,7 +27,8 @@ function prepare_wp {
 	check_os
 
 	wp_version=latest
-	read -p "WordPress Version: [Default: latest] " WP_Version
+	printf "\n${BLUE}WordPress Version ${GRAY}[Default: latest]:${NC}\n"
+	read WP_Version
 	if [ $WP_Version ]; then
 		wp_version=$WP_Version
 	fi
@@ -33,16 +37,16 @@ function prepare_wp {
 	fi
 
 	echo 
-	echo "Downloading WordPress $wp_version ..."
+	printLn "Downloading WordPress $wp_version ..."
 	curl -sS -o wp$Extension https://wordpress.org/$wp_version$Extension
 
-	echo "Changing folder mod, may require sudo password.."
 	if [ `uname` != 'Darwin' ]; then
+		printf "${GREY}Changing folder mod, may require sudo password..${NC}\n"
 		sudo chown $User:$User wp$Extension
 	fi
 	sudo chmod 777 wp$Extension
 
-	echo "Unzipping..."
+	printLn "Unzipping..."
 	if [ `uname` != 'Darwin' ]; then
 		unzip -q wp$Extension
 	fi

@@ -13,8 +13,9 @@ function add_host() {
 
     if [ -n "$(grep $Domain $Host_path)" ]
         then
-            printf "$Domain already exists : \n$(grep $Domain $Host_path)\n"
-			read -p "Want to reuse? (y/N): " ReuseDomain
+            printf "\n${GRAY}$Domain already exists in hosts: \n$(grep $Domain $Host_path)${GRAY}\n\n"
+            printf "${BLUE}Want to reuse the same domain? ${GRAY}(y/N):${NC} "
+			read ReuseDomain
 			if [ $ReuseDomain == "N" ]; then
 				echo 
 				get_inputs

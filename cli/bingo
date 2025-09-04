@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source $(dirname "$0")/cli/ui
 source $(dirname "$0")/cli/routes
 source $(dirname "$0")/cli/get_inputs
 source $(dirname "$0")/cli/update_hosts
