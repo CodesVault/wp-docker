@@ -12,11 +12,6 @@ check_os() {
 }
 
 function prepare_wp {
-	if [ `uname` != 'Darwin' ]; then
-		sudo chown -R $User:$User wordpress
-	fi
-	sudo chmod -R 777 wordpress
-
 	echo 
 	printf "${BLUE}Want to download WordPress also? ${GRAY}(y/N):${NC} "
 	read Download_WP

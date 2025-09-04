@@ -14,12 +14,13 @@ Each development Environment will run into Docker containers and completely isol
 	<li>One command, Zero configuration Docker environment setup</li>
 	<li>Can access into Docker container using <code>docker-compose exec php bash</code>. Installing composer packages.</li>
 	<li>Choose any PHP FPM version that is available in <a href="https://hub.docker.com/_/php">Docker Hub</a></li>
-	<li>Choose any NODEJS version. Build assets isolatly in this container.</li>
+	<li>Choose any NODEJS version. Build assets isolatly in the container.</li>
 	<li>Choose any WordPress release version from <a href="https://wordpress.org/download/releases/">Here</a></li>
 	<li>Nginx</li>
 	<li>Mysql</li>
 	<li>PHPMyAdmin</li>
 	<li>WP CLI</li>
+	<li>Xdebug</li>
 </p>
 
 <br>

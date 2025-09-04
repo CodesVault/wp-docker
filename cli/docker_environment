@@ -19,8 +19,9 @@ function docker_environment {
 
 	docker-compose up -d --build
 
+	echo 
+	printf "\n${GRAY}Changing /db folder mod, may require sudo password..${NC}\n"
 	if [ `uname` != 'Darwin' ]; then
-		printf "\n${GRAY}Changing /db folder mod, may require sudo password..${NC}\n"
 		sudo chown -R $User:$User db
 	fi
 	sudo chmod -R 777 db

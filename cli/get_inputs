@@ -1,11 +1,6 @@
 #!/bin/bash
 
 function get_inputs {
-	# ANSI color codes
-	BLUE='\033[0;34m'
-	GRAY='\033[0;37m'
-	NC='\033[0m' # No Color
-	
 	printf "\n${BLUE}Domain prefix: ${NC}"
 	read DOMAIN
 	if [ ! $DOMAIN ]; then
@@ -20,8 +15,8 @@ function get_inputs {
 		PHP_VERSION=$php_version
 	fi
 
-	NODEJS_VERSION=16.x
-	printf "\n${BLUE}NodeJS version ${GRAY}[Default 16.x]:${NC}\n "
+	NODEJS_VERSION=20.x
+	printf "\n${BLUE}NodeJS version ${GRAY}[Default 20.x]:${NC}\n "
 	read nodejs_version
 	if [ $nodejs_version ]; then
 		NODEJS_VERSION=$nodejs_version
