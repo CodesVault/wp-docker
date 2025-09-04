@@ -12,13 +12,12 @@ Each development Environment will run into Docker containers and completely isol
 <p>
 <strong>Features:</strong>
 	<li>One command, Zero configuration Docker environment setup</li>
-	<li>Can access into Docker container using <code>docker-compose exec php bash</code>. Installing packages & building assets can be done isolatly here.</li>
+	<li>Can access into Docker container using <code>docker-compose exec php bash</code>. Installing composer packages.</li>
 	<li>Choose any PHP FPM version that is available in <a href="https://hub.docker.com/_/php">Docker Hub</a></li>
-	<li>Choose any NODEJS version</li>
+	<li>Choose any NODEJS version. Build assets isolatly in this container.</li>
 	<li>Choose any WordPress release version from <a href="https://wordpress.org/download/releases/">Here</a></li>
 	<li>Nginx</li>
 	<li>Mysql</li>
-	<li>Composer</li>
 	<li>PHPMyAdmin</li>
 	<li>WP CLI</li>
 </p>
@@ -33,11 +32,11 @@ Docker, Docker Compose and CURL need to be installed in your machine. `docker` a
 <br>
 
 ## Installation
-* Clone this repository to your Home directory `git clone git@github.com:awesomemotive/wp-docker.git`.
-* Make `wp-docker/codesvault` file executable. Run: `sudo chmod +x wp-docker/codesvault`
+* Download the `codesvault.zip` from [latest release](https://github.com/CodesVault/wp-docker/releases/tag/v1.1.0)
+* Make `codesvault/wp-docker` file executable. Run: `sudo chmod +x codesvault/wp-docker`
 * Add repo into your PATH.
-	* If you're using ZSH then you can make an alias into `zshrc` file. `alias codesvault="~/wp-docker/codesvault"`.
-	* If you're using Bash then edit your `.bashrc` and add: `export PATH=~/wp-docker:$PATH`
+	* If you're using ZSH then you can make an alias into `zshrc` file. `alias wp-docker="~/codesvault/wp-docker"`.
+	* If you're using Bash then edit your `.bashrc` and add: `export PATH=~/codesvault/wp-docker:$PATH`
 
 <br>
 <br>
@@ -45,15 +44,15 @@ Docker, Docker Compose and CURL need to be installed in your machine. `docker` a
 ## Uses
 Just go to your desired folder and run
 ``` bash
-codesvault
+wp-docker
 ```
 
 <br>
 
 When the setup process is done change directory (cd) in to the domain prefix that you have been provided.
-Here all docker-compose commands also can be run. If you want to access your container just run: `docker-compose exec php bash`, in this container you will have PHP, NodeJS of your choosen version. Also have Git, Composer.
+Here Docker configurations and WordPress is ready to use.
 <br>
-Incase if you forgate your domain or PHPMyAdmin url then just run `codesvault --routes`.
+Incase if you forgate your domain or PHPMyAdmin url then just run `wp-docker --routes`.
 
 <br>
 <br>

@@ -78,59 +78,9 @@ add_file_content() {
         echo "Adding $file_path..."
         echo "" >> "$TEMP_SCRIPT"
         echo "# Content from $file_path" >> "$TEMP_SCRIPT"
-        
-        # Remove shebang and source statements, add content
-        if [[ "$file_path" == "cli/generate_files" ]]; then
-            # Replace the generate_files content to use embedded Docker files
-            cat >> "$TEMP_SCRIPT" << 'EOF'
 
-DOMAIN=$1
-PHP_VERSION=$2
-NODEJS_VERSION=$3
-
-function generate_env {
-    local target_dir="$1"
-    
-    PORT=`random_port 3000`
-    mysql_port=`random_port 4000`
-    phpmyadmin_port=`random_port 5000`
-
-   cat > "$target_dir/.env" << EOL
-APP=$DOMAIN
-DOMAIN=$DOMAIN.test
-HTTP_PORT=$PORT
-MYSQL_PORT=$mysql_port
-PHPMYADMIN_PORT=$phpmyadmin_port
-
-PHP_VERSION=$PHP_VERSION
-NODEJS_VERSION=$NODEJS_VERSION
-
-MYSQL_DATABASE=wp
-MYSQL_USER=wp
-MYSQL_PASSWORD=secret
-MYSQL_ROOT_PASSWORD=secret
-EOL
-
-    if [ `uname` != 'Darwin' ]; then
-        User=`whoami`
-        sudo chown $User:$User "$target_dir/.env"
-    fi
-}
-
-function generate_files {
-    Current_Dir=`pwd`/$DOMAIN
-    mkdir -p "$Current_Dir"
-    
-    # Create Docker files from embedded content
-    create_docker_files "$Current_Dir"
-
-    # Generate .env file
-    echo 
-    printLn "Generating env"
-    generate_env "$Current_Dir"
-}
-EOF
-        elif [[ "$file_path" == "cli/bingo" ]]; then
+        # Remove shebang and source statements
+        if [[ "$file_path" == "cli/bingo" ]]; then
             # Special handling for bingo to remove source statements
             sed '1{/^#!/d;}; /^source.*cli\//d' "$file_path" >> "$TEMP_SCRIPT"
         else

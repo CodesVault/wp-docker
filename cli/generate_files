@@ -7,16 +7,14 @@ DOMAIN=$1
 PHP_VERSION=$2
 NODEJS_VERSION=$3
 
-Dir=$(cd `dirname $0` && pwd)
-
 function generate_env {
-	Docker_Dir=$(cd "$Dir/master_docker" && pwd)
+    local target_dir="$1"
+    
+    PORT=`random_port 3000`
+    mysql_port=`random_port 4000`
+    phpmyadmin_port=`random_port 5000`
 
-	PORT=`random_port 3000`
-	mysql_port=`random_port 4000`
-	phpmyadmin_port=`random_port 5000`
-
-   cat > $Docker_Dir/.env << EOF
+   cat > "$target_dir/.env" << EOL
 APP=$DOMAIN
 DOMAIN=$DOMAIN.test
 HTTP_PORT=$PORT
@@ -26,24 +24,28 @@ PHPMYADMIN_PORT=$phpmyadmin_port
 PHP_VERSION=$PHP_VERSION
 NODEJS_VERSION=$NODEJS_VERSION
 
+DB_HOST=mysql
 MYSQL_DATABASE=wp
 MYSQL_USER=wp
 MYSQL_PASSWORD=secret
 MYSQL_ROOT_PASSWORD=secret
-EOF
+EOL
 
-	if [ `uname` != 'Darwin' ]; then
-		User=`whoami`
-		sudo chown $User:$User $Docker_Dir/.env
-	fi
+    if [ `uname` != 'Darwin' ]; then
+        User=`whoami`
+        sudo chown $User:$User "$target_dir/.env"
+    fi
 }
 
 function generate_files {
-	echo 
-	printLn "Generating env"
-	generate_env
+    Current_Dir=`pwd`/$DOMAIN
+    mkdir -p "$Current_Dir"
+    
+    # Create Docker files from embedded content
+    create_docker_files "$Current_Dir"
 
-	printLn "Generating Docker files"
-	Current_Dir=`pwd`/$DOMAIN
-	cp -R $Docker_Dir/ "$Current_Dir"
+    # Generate .env file
+    echo 
+    printLn "Generating env"
+    generate_env "$Current_Dir"
 }
