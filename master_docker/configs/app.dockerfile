@@ -6,15 +6,14 @@ ARG NODEJS_VERSION
 
 RUN touch /var/log/error_log
 
-# ADD ./php/www.conf /usr/local/etc/php-fpm.d/www.conf
-
 RUN addgroup docker && useradd -rm -d /home/docker -s /bin/bash -g root -G sudo -u 1001 docker
 RUN mkdir -p /var/www/html
 RUN chown docker:docker /var/www/html
 RUN chmod 777 /var/www/html
 WORKDIR /var/www/html
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
+RUN apt-get update && apt-get install -y libzip-dev
+RUN docker-php-ext-install mysqli pdo pdo_mysql zip && docker-php-ext-enable pdo_mysql
 
 RUN pecl install -o -f xdebug \
     && docker-php-ext-enable xdebug
@@ -29,8 +28,6 @@ RUN echo "zend_extension=xdebug" > /usr/local/etc/php/conf.d/docker-php-ext-xdeb
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
-
-# RUN chmod o+r /etc/resolv.conf
 
 RUN apt-get update && apt-get install -y git apt-utils zip unzip
 
