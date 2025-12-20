@@ -13,7 +13,7 @@ check_os() {
 
 function prepare_wp {
 	echo 
-	printf "${BLUE}Want to download WordPress also? ${GRAY}(y/N):${NC} "
+	printf "${BLUE}Want to download WordPress also? ${GRAY}(y/N): ${NC}"
 	read Download_WP
 	if [ $Download_WP == "N" ]; then
 		exit
@@ -22,7 +22,7 @@ function prepare_wp {
 	check_os
 
 	wp_version=latest
-	printf "\n${BLUE}WordPress Version ${GRAY}[Default: latest]:${NC}\n"
+	printf "\n${BLUE}WordPress Version ${GRAY}[Default: latest]: ${NC}"
 	read WP_Version
 	if [ $WP_Version ]; then
 		wp_version=$WP_Version
